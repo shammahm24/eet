@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Node backend for booiking application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shammahm24/eet.git"
+  },
+  "keywords": [
+    "booking"
+  ],
+  "author": "Shammah Matasva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shammahm24/eet/issues"
+  },
+  "homepage": "https://github.com/shammahm24/eet#readme"
+}
