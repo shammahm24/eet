@@ -42,3 +42,5 @@ router.delete("/:id", (req, res) => {
         message : `booking deleted ${_id}`
     })
 })
+
+module.exports = router;
