@@ -4,8 +4,8 @@
   "description": "Node backend for booiking application",
   "main": "index.js",
   "scripts": {
-    "start":"node index.js",
-    "dev":"nodemon index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +20,14 @@
   "bugs": {
     "url": "https://github.com/shammahm24/eet/issues"
   },
-  "homepage": "https://github.com/shammahm24/eet#readme"
+  "homepage": "https://github.com/shammahm24/eet#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http": "^0.0.1-security",
+    "mongoose": "^8.10.1",
+    "nodemon": "^3.1.9"
+  }
 }
