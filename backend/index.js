@@ -3,6 +3,7 @@ const http = require("http")
 const morgan = require("morgan");
 
 //import custom routes
+const bookingRoutes = require("./route/booking");
 
 //create express server
 app = express();
@@ -18,6 +19,8 @@ app.use(morgan('dev'))
 app.get('/',(req, res) =>{
     res.json({"message" : "EET Server"})
 })
+
+app.use("/api/bookings/", bookingRoutes);
 
 // Start server
 app.listen(port, () =>{
