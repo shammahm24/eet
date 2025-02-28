@@ -56,3 +56,5 @@ const locationSchema = new mongoose.Schema({
       type: [Number],
       required: true
     } });
+
+    module.exports = Booking = mongoose.model("bookings", bookingSchema);
