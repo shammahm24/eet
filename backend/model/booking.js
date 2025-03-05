@@ -1,6 +1,17 @@
 const mongoose = require("mongoose");
 const Schema =  mongoose.Schema;
 
+const locationSchema = new mongoose.Schema({
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    } });
+
 const bookingSchema = new Schema({
     _id : mongoose.SchemaTypes.ObjectId,
     email : {
@@ -46,15 +57,4 @@ const bookingSchema = new Schema({
     }
 }, {timestamps : true});
 
-const locationSchema = new mongoose.Schema({
-    type: {
-      type: String,
-      enum: ['Point'],
-      required: true
-    },
-    coordinates: {
-      type: [Number],
-      required: true
-    } });
-
-    module.exports = Booking = mongoose.model("bookings", bookingSchema);
+module.exports = Booking = mongoose.model("bookings", bookingSchema);

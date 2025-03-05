@@ -1,5 +1,8 @@
+const bodyParser = require("body-parser");
+const cors  = require("cors");
 const express = require("express");
 const http = require("http")
+const mongoose = require("mongoose");
 const morgan = require("morgan");
 
 //import custom routes
@@ -12,8 +15,20 @@ http.Server(app)
 //configure environment variables
 require("dotenv").config();
 const port = process.env.PORT || 3000;
+const db_uri = process.env.DB_URI
 
-app.use(morgan('dev'))
+app.use(morgan('dev'));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+mongoose.connect(db_uri, {});
+const connection =  mongoose.connection;
+connection.once('open', ()=> {
+    console.log("Database connection successful!");
+})
 
 //Configure Routres
 app.get('/',(req, res) =>{

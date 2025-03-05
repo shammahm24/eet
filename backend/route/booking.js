@@ -1,14 +1,11 @@
 const express = require("express");
+const {addBooking} = require("../controller/booking")
 
 
 const router = express.Router();
 
 // create new booking
-router.post("/", (req, res) => {
-    res.status(200).json({
-        message : "booking posted"
-    });
-});
+router.post("/",addBooking);
 
 // update booking by id
 router.patch("/:id", (req, res) => {
