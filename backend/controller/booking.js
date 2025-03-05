@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const Booking = require("../model/booking");
 
+const fields = ["_id", "email", "phone","firstName", "lastName", "startLocation", "endLocation", "arrivalTime", "pickUpTime","flightCode","carType","status", "createdAt", "updatedAt","__v"]
 /*
 Todo : check for preexisting active booking from same email at same time.
 checking preexisting values will be built into user controller from initial 
@@ -47,7 +48,7 @@ function addBooking(req, res, next){
 }
 
 function getAll(req, res, next){
-    const fields = ["_id", "email", "phone","firstName", "lastName", "startLocation", "endLocation", "arrivalTime", "pickUpTime","flightCode","carType","status", "createdAt", "updatedAt","__v"]
+    
     Booking.find().select(fields).exec().then(docs => {
         const response = {
             count : docs.length,
@@ -76,7 +77,29 @@ function getAll(req, res, next){
     
 }
 
+function getOne(req, res, next) {
+    const id = req.params.id
+    Booking.findById({_id:id})
+    .select(fields)
+    .exec()
+    .then(doc =>{
+        if(doc){
+            res.status(200).json(doc)
+        } else{
+            res.status(404).json({
+                message : "No booking found"
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    });
+}
+
 module.exports = {
     addBooking,
-    getAll
+    getAll,
+    getOne
 }
