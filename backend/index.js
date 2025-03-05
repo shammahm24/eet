@@ -32,10 +32,23 @@ connection.once('open', ()=> {
 
 //Configure Routres
 app.get('/',(req, res) =>{
-    res.json({"message" : "EET Server"})
+    res.json({"message" : "EET Server"});
 })
 
 app.use("/api/bookings/", bookingRoutes);
+
+app.use((req, res, next) =>{
+    const error = new Error("Not found");
+    error.status = 404;
+    next(error);
+});
+
+app.use((error, req, next) =>{
+    res.status(error.status || 500);
+    res.json({
+        message: error.message
+    });
+});
 
 // Start server
 app.listen(port, () =>{
