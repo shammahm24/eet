@@ -2,20 +2,22 @@ const mongoose = require("mongoose")
 const Booking = require("../model/booking");
 
 function addBooking(req, res, next){
-    const body = red.body;
+    const body = req.body;
+    const startCoordinates = body.endLocation?.coordinates;
+    const endCoordinates = body.endLocation?.coordinates;
     const booking = new Booking({
-        _id : mongoose.Types.ObjectId(),
+        _id : new mongoose.Types.ObjectId(),
         email : body.email,
         phone : body.email,
         firstName : body.firstName,
         lastName : body.lastName,
         startLocation : {
             type : "Point",
-            coordinates : [body.startLocation.longitude, body.startLocation.latitude],
+            coordinates : startCoordinates,
         },
         endLocation : {
             type : "Point",
-            coordinates : [body.endLocation.longitude, body.endLocation.latitude],
+            coordinates : endCoordinates,
         },
         flightCode : body.flightCode,
         carType : body.carType,
@@ -26,16 +28,20 @@ function addBooking(req, res, next){
     booking
         .save()
         .then((result) => {
-            resolve(res.status(201).json({
+            res.status(201).json({
                 message : 'Booking Added',
                 booking : result
-            }));
+            });
         })
         .catch((err) => {
-            reject(res.status(500).json({
+            res.status(500).json({
                 error : err.message
-            }));
+            });
         });
+}
+
+function getAll(req, res, next){
+
 }
 
 module.exports = {

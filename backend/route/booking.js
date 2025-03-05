@@ -5,7 +5,9 @@ const {addBooking} = require("../controller/booking")
 const router = express.Router();
 
 // create new booking
-router.post("/",addBooking);
+router.post("/",(req, res, next) => {
+    addBooking(req,res,next);
+});
 
 // update booking by id
 router.patch("/:id", (req, res) => {
