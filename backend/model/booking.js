@@ -42,6 +42,13 @@ const bookingSchema = new Schema({
     endLocation : {
         type : locationSchema
     },
+    arrivalTime :{
+        type : Date,
+        required : true
+    },
+    pickUpTime : {
+        type : Date,
+    },
     flightCode : {
         type : String,
     },

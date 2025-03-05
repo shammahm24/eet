@@ -1,5 +1,5 @@
 const express = require("express");
-const {addBooking} = require("../controller/booking")
+const {addBooking, getAll} = require("../controller/booking")
 
 
 const router = express.Router();
@@ -7,6 +7,11 @@ const router = express.Router();
 // create new booking
 router.post("/",(req, res, next) => {
     addBooking(req,res,next);
+});
+
+// get all bookings
+router.get("/", (req, res, next) => {
+    getAll(req, res, next);
 });
 
 // update booking by id
