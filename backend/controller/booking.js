@@ -98,6 +98,10 @@ function getOne(req, res, next) {
     });
 }
 
+function patchOne(req, res, next) {
+    
+}
+
 module.exports = {
     addBooking,
     getAll,

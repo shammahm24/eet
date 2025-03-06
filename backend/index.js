@@ -14,7 +14,7 @@ http.Server(app)
 
 //configure environment variables
 require("dotenv").config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 const db_uri = process.env.DB_URI
 
 app.use(morgan('dev'));
