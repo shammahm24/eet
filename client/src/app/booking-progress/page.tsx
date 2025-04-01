@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import CarCard from "../../components/CarCard";
-import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleRight, FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect} from "react";
@@ -68,9 +68,18 @@ export default function BookingProgress(){
           router.push("/"); // Redirect to home page
         }
       }, [booking, router]);
-      
+
     return(
-        <div className="flex h-full w-full items-center pt-11 justify-center bg-black">
+        <div className="flex h-full flex-col w-full items-center pt-11 justify-center bg-black">
+            <div className="flex w-full flex-col items-center justify-center pb-8">
+                <div className="flex flex-row w-full h-full items-center justify-center">
+                    <h1 className="">{booking?.start_loc} </h1>
+                    <FaArrowRight/>
+                    <h1>{booking?.end_loc}</h1>
+                </div>
+                <span className="text-slate-400 text-xs">{booking?.date} at {booking?.time}</span>
+                <span className="text-slate-400 text-xs">30 miles</span>
+            </div>
             <div className="flex flex-col w-full items-center justify-center">
                 <h2 className="text-white text-xl font-bold mb-4">Vehicle Selection</h2>
                 
@@ -103,15 +112,15 @@ export default function BookingProgress(){
                 </div>
                 {selectedCar && (
                     <div className="flex flex-col items-center mt-4 text-white">
-                        <div className="flex-initial w-full flex flex-col justify-between">
-                            <h3>Selection: {vehicleTypes[selectedCar].type}</h3>
+                        <div className="flex-initial w-full flex flex-col justify-between text-slate-400 text-sm">
+                            <h3>{vehicleTypes[selectedCar].type}</h3>
                             <p>
-                                Price: ${vehicleTypes[selectedCar].price}
+                                Fee: ${vehicleTypes[selectedCar].price}
                             </p>
                         </div>
                         <Link className="flex flex-col items-center w-full" href={{pathname : "booking-progress/ride-details"}}
                         onClick={handleNavigation}>
-                            <div className="flex flex-row w-3/6 p-2 m-3 items-center justify-between text-black bg-slate-200 rounded-full">
+                            <div className="flex flex-row w-full p-2 m-3 items-center justify-between text-black bg-slate-200 rounded-full">
                             
                                 <h1 className="font-bold">Go</h1>
                                 <FaArrowAltCircleRight/>

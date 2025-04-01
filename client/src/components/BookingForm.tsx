@@ -55,6 +55,7 @@ export default function BookingForm() {
     return(
         <div>
             <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+                <h1 className="text-white text-2xl font-bold mb-8">Start Booking</h1>
                 <div className="grid md:grid-cols-7 md:gap-6">
                     <div className="relative z-0 w-full mb-5 md:col-span-3 md:col-start-1 group">
                         <input
