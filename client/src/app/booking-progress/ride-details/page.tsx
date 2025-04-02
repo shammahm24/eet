@@ -91,42 +91,38 @@ export default function RideDetails(){
 
             </div>
 
-            <div className="flex min-w-full text-slate-400 text-sm flex-col items-center justify-center border-solid border-2 rounded-xl m-l-3 border-slate-500">
+            <div className="flex min-w-full text-slate-400 text-sm flex-col items-center justify-center  border-0 rounded-xl m-l-3 border-slate-500">
                 <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">Start</h1>
-                    <span className="col-start-3">{booking?.start_loc}</span>
+                    <h1 className="col-start-1">Start</h1>
+                    <span className="col-start-2">{booking?.start_loc}</span>
                 </div>
                 <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">End</h1>
-                    <span className="col-start-3">{booking?.end_loc}</span>
+                    <h1 className="col-start-1">End</h1>
+                    <span className="col-start-2">{booking?.end_loc}</span>
                 </div>
                 <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">Date</h1>
-                    <span className="col-start-3">{booking?.date}</span>
+                    <h1 className="col-start-1">Date</h1>
+                    <span className="col-start-2">{booking?.date}</span>
                 </div>
                 <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">Time</h1>
-                    <span className="col-start-3">{booking?.time}</span>
+                    <h1 className="col-start-1">Time</h1>
+                    <span className="col-start-2">{booking?.time}</span>
                 </div>
                 <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">Car Type</h1>
-                    <span className="col-start-3">{booking?.car_type}</span>
+                    <h1 className="col-start-1">Car Type</h1>
+                    <span className="col-start-2">{booking?.car_type}</span>
                 </div>
                 <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">Distance</h1>
-                    <span className="col-start-3">300 miles</span>
+                    <h1 className="col-start-1">Distance</h1>
+                    <span className="col-start-2">300 miles</span>
                 </div>
                 <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">Ride Fee</h1>
-                    <span className="col-start-3">US$</span>
-                </div>
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-2">Tax</h1>
-                    <span className="col-start-3">{booking?.car_type}</span>
+                    <h1 className="col-start-1">Ride Fee</h1>
+                    <span className="col-start-2">US$</span>
                 </div>
                 <div className="grid grid-cols-3 text-white min-w-full justify-between items-center">
-                    <h1 className="font-bold col-start-2">Total Fee</h1>
-                    <span className="font-bold col-start-3">US$</span>
+                    <h1 className="font-bold col-start-1">Total Fee <span className="text-slate-500 text-xs">{"\(Tax Included\)"}</span> </h1>
+                    <span className="font-bold col-start-2">US$</span>
                 </div>
 
                 <div className="grid grid-cols-3 min-w-full pt-6 justify-between items-center">
