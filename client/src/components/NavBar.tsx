@@ -61,7 +61,7 @@ export default function Navbar() {
                 href="/"
                 className="cursor-pointer text-gray-400 font-bold text-xl pt-4 ps-4"
               >
-                Executive Elite Transport
+                Executive Elite
               </Link>
               <button
                 onClick={toggleMobileMenu}
@@ -94,7 +94,7 @@ export default function Navbar() {
                 </li>
               ))}
               <li className="mt-4">
-                <button className="bg-gray-500 text-white hover:text-black px-4 py-2 rounded-md hover:bg-gray-300 w-1/2">
+                <button className="bg-gray-500 text-white hover:text-black px-4 py-2 rounded-md hover:bg-gray-300 w-full md:w-1/2">
                     <Link href="/">Start Booking</Link> 
                 </button>
               </li>

@@ -74,12 +74,12 @@ export default function BookingForm() {
       };
 
     return(
-        <LoadScript googleMapsApiKey={googleMapsApiKey} libraries={["places"]} onLoad={() => console.log("Google Maps API Loaded")}>
+        <LoadScript googleMapsApiKey={googleMapsApiKey} libraries={libraries} onLoad={() => console.log("Google Maps API Loaded")}>
         <div>
-            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+            <form className="max-w-md mx-auto -z-10" onSubmit={handleSubmit}>
                 <h1 className="text-white text-2xl font-bold mb-8">Start Booking</h1>
                 <div className="grid md:grid-cols-7 md:gap-6">
-                    <div className="relative z-0 w-full mb-5 md:col-span-3 md:col-start-1 group">
+                    <div className="relative  w-full mb-5 md:col-span-3 md:col-start-1 group">
                         <Autocomplete 
                             onLoad={(autocomplete) => {
                                 autocompleteStartRef.current = autocomplete;

@@ -3,12 +3,13 @@ import { useRouter} from 'next/navigation';
 import { useEffect} from "react";
 import { useState } from "react";
 import { useBooking } from "@/context/BookingContext";
-import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
 import Link from "next/link";
 
 export default function RideDetails(){
     const {booking} = useBooking();
     const router = useRouter();
+    const [isValid, setIsValid] = useState(false);
 
     const [formData, setFormData] = useState({
             firstName: "",
@@ -18,17 +19,60 @@ export default function RideDetails(){
             message: "",
           });
 
-    const handleNavigation = () => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const form = document.getElementById("details-form") as HTMLFormElement;
         
-        //router.push("/page2", { state: { name: "John", age: 25 } });
-      };
+        if (form.checkValidity()) {
+            // Combine form data with booking details (like car type) to send to the API
+            const payload = {
+                ...formData, // Form data
+                carType: booking?.car_type, // Additional booking details
+                startLoc: booking?.start_loc, // Booking start location
+                endLoc: booking?.end_loc, // Booking end location
+                date: booking?.date, // Booking date
+                time: booking?.time, // Booking time
+            };
 
-      useEffect(() => {
+            try {
+                // Send the combined data to your API endpoint
+                const response = await fetch('/api/submit-booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (response.ok) {
+                    // Navigate to the next page after successful submission
+                    router.push("/next-page");
+                } else {
+                    // Handle error if submission fails
+                    console.error("Failed to submit data");
+                }
+            } catch (error) {
+                console.error("An error occurred while submitting:", error);
+            }
+        } else {
+            // Trigger the browser's native form validation (this will show the "required" warnings)
+            form.reportValidity();
+        }
+    };
+
+    useEffect(() => {
         // Check if context data (formData) is available
         if (!booking || Object.keys(booking).length === 0) {
           router.push("/"); // Redirect to home page
         }
-      }, [booking, router]);
+        const form = document.getElementById("details-form") as HTMLFormElement;
+
+        const checkFormValidity = () => setIsValid(form.checkValidity());
+
+        form.addEventListener("input", checkFormValidity);
+  
+        return () => form.removeEventListener("input", checkFormValidity);
+    }, [booking, router]);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
             const { name, value } = e.target;
@@ -40,19 +84,19 @@ export default function RideDetails(){
           };
 
     return(
-        <div className="grid min-h-screen lg:grid-cols-2 items-center justify-center p-8 pl-0 pr-0 pb-20 gap-16 sm:p-0 font-[family-name:var(--font-geist-sans)]">
-            <div className="flex flex-col h-full min-w-full items-center justify-center">
-                <form className="max-w-md mx-auto">
+        <div className="grid min-h-screen lg:grid-cols-2  justify-center p-8 pl-0 pr-0 pb-20 gap-16 sm:p-0 font-[family-name:var(--font-geist-sans)]">
+            <div className="flex flex-col  min-w-full h-[45vh] p-8 items-center justify-start ">
+                <form id="details-form" className="max-w-md mx-auto -z-10 p-4 h-[45vh] items-start  border-2 rounded-xl m-l-3 border-slate-500">
                     <div className="grid md:grid-cols-7 md:gap-6">
-                        <div className="relative z-0 w-full mb-5 md:col-span-3 md:col-start-1 group">
+                        <div className="relative  w-full mb-5 md:col-span-3 md:col-start-1 group">
                             <input type="text" 
                                 name="first_name" 
                                 id="first_name" 
                                 onChange={handleChange}
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
+                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white -z-10 dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
                             <label htmlFor="first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-white peer-focus:dark:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
                         </div>
-                        <div className="relative z-0 w-full mb-5 group md:col-span-3 md:col-start-5">
+                        <div className="relative  w-full mb-5 group md:col-span-3 md:col-start-5">
                             <input type="text" 
                                 name="last_name" 
                                 id="last_name" 
@@ -91,54 +135,45 @@ export default function RideDetails(){
 
             </div>
 
-            <div className="flex min-w-full text-slate-400 text-sm flex-col items-center justify-center  border-0 rounded-xl m-l-3 border-slate-500">
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-1">Start</h1>
-                    <span className="col-start-2">{booking?.start_loc}</span>
-                </div>
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-1">End</h1>
-                    <span className="col-start-2">{booking?.end_loc}</span>
-                </div>
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-1">Date</h1>
-                    <span className="col-start-2">{booking?.date}</span>
-                </div>
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-1">Time</h1>
-                    <span className="col-start-2">{booking?.time}</span>
-                </div>
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-1">Car Type</h1>
-                    <span className="col-start-2">{booking?.car_type}</span>
-                </div>
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-1">Distance</h1>
-                    <span className="col-start-2">300 miles</span>
-                </div>
-                <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                    <h1 className="col-start-1">Ride Fee</h1>
-                    <span className="col-start-2">US$</span>
-                </div>
-                <div className="grid grid-cols-3 text-white min-w-full justify-between items-center">
-                    <h1 className="font-bold col-start-1">Total Fee <span className="text-slate-500 text-xs">{"\(Tax Included\)"}</span> </h1>
-                    <span className="font-bold col-start-2">US$</span>
+            <div className="flex min-w-full h-full text-slate-400 text-sm flex-col p-8 items-start justify-start ">
+                <div className="flex flex-col mb-8 min-w-full h-[40vh] p-4 items-center justify-center  border-2 rounded-xl m-l-3 border-slate-500">
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <span className="col-start-1">{booking?.start_loc}</span>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <FaArrowDown className="col-start-1 text-white"/>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <span className="col-start-1 col-span-3">{booking?.end_loc}</span>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <span className="col-start- col-span-31">{booking?.date}</span>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <span className="col-start-1 col-span-3">{booking?.time}</span>
+                    </div>
                 </div>
 
-                <div className="grid grid-cols-3 min-w-full pt-6 justify-between items-center">
-                    <Link className="flex flex-col col-start-3 items-start w-full" href={{pathname : "booking-progress/ride-details"}}
-                        onClick={handleNavigation}>
-                            <div className="flex flex-row w-3/6 p-2 m-3 items-center justify-between text-black bg-slate-200 rounded-full">
-                            
-                                <h1 className="font-bold">Payment</h1>
-                                <FaArrowAltCircleRight/>
-                            
-                            </div>
-                    </Link>
-                </div>
+                <div className="flex flex-col mb-8 min-w-full p-4 items-center justify-center  border-2 rounded-xl m-l-3 border-slate-500">
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <h1 className="col-start-1">Car Type</h1>
+                        <span className="lg:col-start-2 col-start-3">{booking?.car_type}</span>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <h1 className="col-start-1">Distance</h1>
+                        <span className="lg:col-start-2 col-start-3">300 miles</span>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <h1 className="col-start-1">Ride Fee</h1>
+                        <span className="lg:col-start-2 col-start-3">US$</span>
+                    </div>
+                    <div className="grid grid-cols-3 text-white min-w-full justify-between items-center">
+                        <h1 className="font-bold col-start-1">Total Fee <span className="text-slate-500 text-xs">{"\(Tax Included\)"}</span> </h1>
+                        <span className="font-bold lg:col-start-2 col-start-3">US$</span>
+                    </div>
 
-                
-                
+                <button type="submit" onClick={handleSubmit} className="w-4/6 p-2 m-3 items-center justify-between text-black bg-slate-200 rounded-full">Go to Payment</button>
+                </div>
             </div>
         </div>
     )
