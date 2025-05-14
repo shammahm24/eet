@@ -86,7 +86,7 @@ export default function RideDetails(){
     return(
         <div className="grid min-h-screen lg:grid-cols-2  justify-center p-8 pl-0 pr-0 pb-20 gap-16 sm:p-0 font-[family-name:var(--font-geist-sans)]">
             <div className="flex flex-col  min-w-full h-[45vh] p-8 items-center justify-start ">
-                <form id="details-form" className="max-w-md mx-auto -z-10 p-4 h-[45vh] items-start  border-2 rounded-xl m-l-3 border-slate-500">
+                <form id="details-form" className="max-w-md mx-auto  p-4 h-[45vh] items-start  border-2 rounded-xl m-l-3 border-slate-500">
                     <div className="grid md:grid-cols-7 md:gap-6">
                         <div className="relative  w-full mb-5 md:col-span-3 md:col-start-1 group">
                             <input type="text" 
