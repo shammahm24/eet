@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,7 +24,12 @@ export default function Navbar() {
             href="/"
             className="mr-4 block cursor-pointer py-1.5 text-gray-400 font-bold text-2xl"
           >
-            Executive Elite Transport
+            <Image
+              src={`/LOGO FILES/PNG 2 HQ.png`}
+              alt="Logo"
+              width={100}
+              height={100}
+              className="h-10 w-auto"/>
           </Link>
 
           <div className="lg:hidden">

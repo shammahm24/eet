@@ -74,7 +74,7 @@ export default function BookingForm() {
         <div>
             <form className="max-w-md mx-auto -z-10" onSubmit={handleSubmit}>
                 <h1 className="text-white text-2xl font-bold mb-8">Start Booking</h1>
-                <div className="grid md:grid-cols-2 md:gap-6">
+                <div className="grid md:gap-6">
                     <div className="relative z-0 w-full mb-5 group">
                         <Autocomplete 
                             onLoad={(autocomplete) => {
