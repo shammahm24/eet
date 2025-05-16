@@ -4,7 +4,6 @@ import { useEffect} from "react";
 import { useState } from "react";
 import { useBooking } from "@/context/BookingContext";
 import { FaArrowDown } from "react-icons/fa";
-import Link from "next/link";
 
 export default function RideDetails(){
     const {booking} = useBooking();
@@ -32,6 +31,7 @@ export default function RideDetails(){
                 endLoc: booking?.end_loc, // Booking end location
                 date: booking?.date, // Booking date
                 time: booking?.time, // Booking time
+                miles: booking?.miles, // Booking miles
             };
 
             try {
@@ -83,10 +83,10 @@ export default function RideDetails(){
             }));
           };
 
-    return(
+    return(//flex min-w-full h-full text-slate-400 text-sm flex-col p-8 items-start justify-start
         <div className="grid min-h-screen lg:grid-cols-2  justify-center p-8 pl-0 pr-0 pb-20 gap-16 sm:p-0 font-[family-name:var(--font-geist-sans)]">
             <div className="flex flex-col  min-w-full h-[45vh] p-8 items-center justify-start ">
-                <form id="details-form" className="max-w-md mx-auto  p-4 h-[45vh] items-start  border-2 rounded-xl m-l-3 border-slate-500">
+                <form id="details-form" className="w-full mx-auto  p-4 h-[45vh] items-start  border-2 rounded-xl m-l-3 border-slate-500">
                     <div className="grid md:grid-cols-7 md:gap-6">
                         <div className="relative  w-full mb-5 md:col-span-3 md:col-start-1 group">
                             <input type="text" 
@@ -161,7 +161,7 @@ export default function RideDetails(){
                     </div>
                     <div className="grid grid-cols-3 min-w-full justify-between items-center">
                         <h1 className="col-start-1">Distance</h1>
-                        <span className="lg:col-start-2 col-start-3">300 miles</span>
+                        <span className="lg:col-start-2 col-start-3">{booking?.miles} miles</span>
                     </div>
                     <div className="grid grid-cols-3 min-w-full justify-between items-center">
                         <h1 className="col-start-1">Ride Fee</h1>

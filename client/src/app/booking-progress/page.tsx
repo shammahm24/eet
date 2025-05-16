@@ -53,7 +53,8 @@ export default function BookingProgress(){
             end_loc: booking? booking.end_loc : "null",
             time: booking? booking.time : "null",
             date: booking? booking.date : "null",
-            car_type: selectedCar? vehicleTypes[selectedCar].type : "null"
+            car_type: selectedCar? vehicleTypes[selectedCar].type : "null",
+            miles: booking? booking.miles : 0
         })
         //router.push("/page2", { state: { name: "John", age: 25 } });
       };
@@ -78,7 +79,7 @@ export default function BookingProgress(){
                     <h1>{booking?.end_loc}</h1>
                 </div>
                 <span className="text-slate-400 text-xs">{booking?.date} at {booking?.time}</span>
-                <span className="text-slate-400 text-xs">30 miles</span>
+                <span className="text-slate-400 text-xs">{booking?.miles} miles</span>
             </div>
             <div className="flex flex-col w-full items-center justify-center">
                 <h2 className="text-white text-xl font-bold mb-4">Vehicle Selection</h2>

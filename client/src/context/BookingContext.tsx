@@ -8,13 +8,15 @@ type BookingContextType = {
         time: string;
         date: string;
         car_type: string;
+        miles: number;
     } | null;
     setBooking : (booking : {
         start_loc: string;
         end_loc: string;
         time: string;
         date: string;
-        car_type: string;}) => void;
+        car_type: string;
+        miles: number}) => void;
 };
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -25,7 +27,8 @@ export const BookingProvider = ({ children }: { children: ReactNode }) => {
         end_loc: string;
         time: string;
         date: string;
-        car_type: string;} | null>(null);
+        car_type: string;
+        miles: number} | null>(null);
   
     return (
       <BookingContext.Provider value={{ booking, setBooking }}>
