@@ -7,6 +7,7 @@ const morgan = require("morgan");
 
 //import custom routes
 const bookingRoutes = require("./route/booking");
+const vehicleRoutes = require("./route/vehicle");
 
 //create express server
 app = express();
@@ -36,6 +37,7 @@ app.get('/',(req, res) =>{
 })
 
 app.use("/api/bookings/", bookingRoutes);
+app.use("/api/vehicles/", vehicleRoutes);
 
 app.use((req, res, next) =>{
     const error = new Error("Not found");
