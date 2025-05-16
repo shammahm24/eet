@@ -127,9 +127,9 @@ function deleteVehicle(req, res, next){
 function getpriceAll(req, res, next) {
     const { distance, extra, tax } = req.query;
 
-    if (!distance || !tax) {
+    if (!distance) {
         return res.status(400).json({
-            message: "Distance and tax are required query parameters"
+            message: "Distance is required query parameters"
         });
     }
 
@@ -138,7 +138,7 @@ function getpriceAll(req, res, next) {
             count: docs.length,
             vehicles: docs.map(doc => {
                 const basePrice = doc.price;
-                const recalculatedPrice = (basePrice * distance) + (extra || 0) + (basePrice * tax);
+                const recalculatedPrice = (basePrice * distance) + (extra || 0) //+ (basePrice * tax);
                 return {
                     ...doc._doc,
                     recalculatedPrice: recalculatedPrice.toFixed(2)
