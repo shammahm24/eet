@@ -42,7 +42,7 @@ export default function BookingProgress(){
 
                 // Transform the data into the required format
                 const transformedData: Record<string, VehicleType> = {};
-                data.vehicles.forEach((vehicle: any, index: number) => {
+                data.vehicles.forEach((vehicle: { vehicleType: string; recalculatedPrice: number; seats: number; luggage: number; image: string }, index: number) => {
                     transformedData[`type${index + 1}`] = {
                         type: vehicle.vehicleType,
                         price: vehicle.recalculatedPrice,
