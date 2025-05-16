@@ -22,6 +22,9 @@ export default function RideDetails(){
         e.preventDefault();
         const form = document.getElementById("details-form") as HTMLFormElement;
         
+        if(isValid){
+            console.log("Form is valid");
+        }
         if (form.checkValidity()) {
             // Combine form data with booking details (like car type) to send to the API
             const payload = {

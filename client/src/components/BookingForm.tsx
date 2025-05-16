@@ -50,7 +50,10 @@ export default function BookingForm() {
             const distanceInMiles = await getDistance();
             const roundedDistance = parseFloat(distanceInMiles.toFixed(1)); // Round to 1 decimal place
             setFormData((prev) => ({ ...prev, miles: roundedDistance }));
-            setBooking((prev) => ({ ...prev, ...formData, miles: roundedDistance }));
+            setBooking({
+                ...formData,
+                miles: roundedDistance,
+              });
         } catch (error) {
             console.error("Error calculating distance:", error);
         }
