@@ -16,36 +16,53 @@ interface VehicleType {
     image: string;
 }
 
-const vehicleTypes : Record<string, VehicleType> = {
-    "type1" : {
-        type : "Luxury Sedan",
-        price : 3.54,
-        seats : 3,
-        luggage : 3,
-        image : "/car-card/sedan-img.png"
-
-    },
-    "type2" : {
-        type: "Luxury SUV",
-        price : 4.97,
-        seats : 4,
-        luggage : 4,
-        image : "/car-card/compact-suv-img.png"
-    },
-    "type3" : {
-        type : "Luxury XL SUV",
-        price : 5.82,
-        seats : 6,
-        luggage : 6,
-        image : "/car-card/suv-img.png"
-    }
-}
 export default function BookingProgress(){
+    const [vehicleTypes, setVehicleTypes] = useState<Record<string, VehicleType>>({});
     const [selectedCar, setSelectedCar] = useState<string | null>(null);
     
     const {booking, setBooking} = useBooking();
 
     const router = useRouter();
+
+    useEffect(() => {
+        const fetchVehicleTypes = async () => {
+            if (!booking || !booking.miles) {
+                console.error("Booking data or distance is missing");
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_EET_API_URL}/api/vehicles/price?distance=${booking.miles}`
+                );
+                if (!response.ok) {
+                    throw new Error("Failed to fetch vehicle types");
+                }
+                const data = await response.json();
+
+                // Transform the data into the required format
+                const transformedData: Record<string, VehicleType> = {};
+                data.vehicles.forEach((vehicle: any, index: number) => {
+                    transformedData[`type${index + 1}`] = {
+                        type: vehicle.vehicleType,
+                        price: vehicle.recalculatedPrice,
+                        seats: vehicle.seats,
+                        luggage: vehicle.luggage,
+                        image: vehicle.image,
+                    };
+                });
+
+                console.log("Fetched vehicle types:", transformedData);
+                setVehicleTypes(transformedData);
+            } catch (error) {
+                console.error("Error fetching vehicle types:", error);
+            }
+        };
+
+        if (booking && booking.miles) {
+            fetchVehicleTypes();
+        }
+    }, [booking]);
 
     const handleNavigation = () => {
         setBooking({

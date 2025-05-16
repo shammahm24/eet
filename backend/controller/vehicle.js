@@ -2,31 +2,6 @@ const mongoose = require("mongoose")
 const Vehicle = require("../model/vehicle");
 const fields = ["_id", "vehicleType", "price", "seats", "luggage", "image", "status", "createdAt", "updatedAt","__v"]
 
-const vehicles = [
-    {
-        type : "Luxury Sedan",
-        price : 3.54,
-        seats : 3,
-        luggage : 3,
-        image : "/car-card/sedan-img.png"
-
-    },
-    {
-        type: "Luxury SUV",
-        price : 4.97,
-        seats : 4,
-        luggage : 4,
-        image : "/car-card/compact-suv-img.png"
-    },
-    {
-        type : "Luxury XL SUV",
-        price : 5.82,
-        seats : 6,
-        luggage : 6,
-        image : "/car-card/suv-img.png"
-    }
-]
-
 function addVehicle(req, res, next){
     const body = req.body;
     const vehicle = new Vehicle({
