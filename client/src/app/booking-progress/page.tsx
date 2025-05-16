@@ -71,7 +71,8 @@ export default function BookingProgress(){
             time: booking? booking.time : "null",
             date: booking? booking.date : "null",
             car_type: selectedCar? vehicleTypes[selectedCar].type : "null",
-            miles: booking? booking.miles : 0
+            miles: booking? booking.miles : 0,
+            fee: selectedCar? vehicleTypes[selectedCar].price : 0,
         })
         //router.push("/page2", { state: { name: "John", age: 25 } });
       };

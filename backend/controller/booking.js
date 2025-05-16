@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const Booking = require("../model/booking");
 
-const fields = ["_id", "email", "phone","firstName", "lastName", "startLocation", "endLocation", "arrivalTime", "pickUpTime","flightCode","carType","status", "createdAt", "updatedAt","__v"]
+const fields = ["_id", "email", "phone","firstName", "lastName", "startLocation", "endLocation", "arrivalTime", "pickUpDate", "pickUpTime","flightCode","carType", "fee","status", "createdAt", "updatedAt","__v"]
 /*
 Todo : check for preexisting active booking from same email at same time.
 checking preexisting values will be built into user controller from initial 
@@ -9,25 +9,20 @@ build.
 */
 function addBooking(req, res, next){
     const body = req.body;
-    const startCoordinates = body.endLocation?.coordinates;
-    const endCoordinates = body.endLocation?.coordinates;
     const booking = new Booking({
         _id : new mongoose.Types.ObjectId(),
         email : body.email,
         phone : body.email,
         firstName : body.firstName,
         lastName : body.lastName,
-        startLocation : {
-            type : "Point",
-            coordinates : startCoordinates,
-        },
-        endLocation : {
-            type : "Point",
-            coordinates : endCoordinates,
-        },
-        arrivalTime : new Date(body.arrivalTime),
+        startLocation : body.startLoc,
+        endLocation : body.endLoc,
+        pickUpTime : new Date(body.time),
+        pickUpdate : new Date(body.date),
         flightCode : body.flightCode,
         carType : body.carType,
+        distance : body.miles,
+        fee : body.fee,
         status : body.status,
         comments : body.comments,
     });

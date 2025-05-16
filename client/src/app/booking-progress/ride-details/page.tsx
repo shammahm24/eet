@@ -35,6 +35,7 @@ export default function RideDetails(){
                 date: booking?.date, // Booking date
                 time: booking?.time, // Booking time
                 miles: booking?.miles, // Booking miles
+                fee: booking?.fee, // Booking fee
             };
 
             try {
@@ -168,11 +169,11 @@ export default function RideDetails(){
                     </div>
                     <div className="grid grid-cols-3 min-w-full justify-between items-center">
                         <h1 className="col-start-1">Ride Fee</h1>
-                        <span className="lg:col-start-2 col-start-3">US$</span>
+                        <span className="lg:col-start-2 col-start-3">US${booking?.fee}</span>
                     </div>
                     <div className="grid grid-cols-3 text-white min-w-full justify-between items-center">
                         <h1 className="font-bold col-start-1">Total Fee <span className="text-slate-500 text-xs">{"\(Tax Included\)"}</span> </h1>
-                        <span className="font-bold lg:col-start-2 col-start-3">US$</span>
+                        <span className="font-bold lg:col-start-2 col-start-3">US${booking?.fee}</span>
                     </div>
 
                 <button type="submit" onClick={handleSubmit} className="w-4/6 p-2 m-3 items-center justify-between text-black bg-slate-200 rounded-full">Go to Payment</button>

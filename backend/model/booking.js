@@ -1,17 +1,6 @@
 const mongoose = require("mongoose");
 const Schema =  mongoose.Schema;
 
-const locationSchema = new mongoose.Schema({
-    type: {
-      type: String,
-      enum: ['Point'],
-      required: true
-    },
-    coordinates: {
-      type: [Number],
-      required: true
-    } });
-
 const bookingSchema = new Schema({
     _id : mongoose.SchemaTypes.ObjectId,
     email : {
@@ -37,10 +26,10 @@ const bookingSchema = new Schema({
         required : true
     },
     startLocation : {
-        type : locationSchema
+        type : String
     },
     endLocation : {
-        type : locationSchema
+        type : String
     },
     arrivalTime :{
         type : Date,
@@ -49,11 +38,22 @@ const bookingSchema = new Schema({
     pickUpTime : {
         type : Date,
     },
+    pickUpdate : {
+        type : Date,
+    },
     flightCode : {
         type : String,
     },
     carType : {
         type : String,
+    },
+    distance : {
+        type : Number,
+        required : true
+    },
+    fee : {
+        type : Number,
+        required : true
     },
     status : {
         type : String,
