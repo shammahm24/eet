@@ -21,11 +21,12 @@ export default function RideDetails(){
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const form = document.getElementById("details-form") as HTMLFormElement;
+        const form2 = document.getElementById("details-form-terms") as HTMLFormElement;
         
         if(isValid){
             console.log("Form is valid");
         }
-        if (form.checkValidity()) {
+        if (form.checkValidity() && form2.checkValidity()) {
             // Combine form data with booking details (like car type) to send to the API
             const payload = {
                 ...formData, // Form data
@@ -40,7 +41,7 @@ export default function RideDetails(){
 
             try {
                 // Send the combined data to your API endpoint
-                const response = await fetch('/api/submit-booking', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_EET_API_URL}/api/bookings/`, { //`${process.env.NEXT_PUBLIC_EET_API_URL}/api/vehicles/price?distance=${booking.miles}`
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ export default function RideDetails(){
 
                 if (response.ok) {
                     // Navigate to the next page after successful submission
-                    router.push("/next-page");
+                    router.push("/payment");
                 } else {
                     // Handle error if submission fails
                     console.error("Failed to submit data");
@@ -61,6 +62,7 @@ export default function RideDetails(){
         } else {
             // Trigger the browser's native form validation (this will show the "required" warnings)
             form.reportValidity();
+            form2.reportValidity();
         }
     };
 
@@ -90,11 +92,11 @@ export default function RideDetails(){
     return(//flex min-w-full h-full text-slate-400 text-sm flex-col p-8 items-start justify-start
         <div className="grid min-h-screen lg:grid-cols-2  justify-center p-8 pl-0 pr-0 pb-20 gap-16 sm:p-0 font-[family-name:var(--font-geist-sans)]">
             <div className="flex flex-col  min-w-full h-[45vh] p-8 items-center justify-start ">
-                <form id="details-form" className="w-full mx-auto  p-4 h-[45vh] items-start  border-2 rounded-xl m-l-3 border-slate-500">
+                <form id="details-form" className="w-full mx-auto  p-4 h-[45vh] items-start  ">
                     <div className="grid md:grid-cols-7 md:gap-6">
                         <div className="relative  w-full mb-5 md:col-span-3 md:col-start-1 group">
                             <input type="text" 
-                                name="first_name" 
+                                name="firstName" 
                                 id="first_name" 
                                 onChange={handleChange}
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white -z-10 dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
@@ -102,7 +104,7 @@ export default function RideDetails(){
                         </div>
                         <div className="relative  w-full mb-5 group md:col-span-3 md:col-start-5">
                             <input type="text" 
-                                name="last_name" 
+                                name="lastName" 
                                 id="last_name" 
                                 onChange={handleChange}
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer" placeholder=" " required />
@@ -137,15 +139,67 @@ export default function RideDetails(){
 
                 </form>
 
+                <form id="details-form-terms" className="w-full mx-auto  p-4 h-[45vh] items-start   ">
+                    <div className="relative z-0 w-full mb-5 group">
+                        <input
+                            type="checkbox"
+                            name="terms"
+                            id="terms"
+                            onChange={handleChange}
+                            className="mr-2"
+                            required
+                        />
+                        <label htmlFor="terms" className="text-sm text-gray-500 dark:text-gray-400">
+                            I agree to the{" "}
+                            <a
+                                href="/terms"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-white underline"
+                            >
+                                Terms and Conditions
+                            </a>
+                        </label>
+                    </div>
+
+                    <div className="relative z-0 w-full mb-5 group">
+                        <input
+                            type="checkbox"
+                            name="liability"
+                            id="liability"
+                            onChange={handleChange}
+                            className="mr-2"
+                            required
+                        />
+                        <label htmlFor="liability" className="text-sm text-gray-500 dark:text-gray-400">
+                            I agree to the{" "}
+                            <a
+                                href="/liability"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-white underline"
+                            >
+                                Liability Waiver
+                            </a>
+                        </label>
+                    </div>
+                </form>
+
             </div>
 
             <div className="flex min-w-full h-full text-slate-400 text-sm flex-col p-8 items-start justify-start ">
-                <div className="flex flex-col mb-8 min-w-full h-[40vh] p-4 items-center justify-center  border-2 rounded-xl m-l-3 border-slate-500">
+                <div className="flex flex-col mb-8 min-w-full h-[40vh] p-4 items-center justify-between  border-2 rounded-xl m-l-3 border-slate-500">
                     <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                        <span className="col-start-1">{booking?.start_loc}</span>
+                        <span className="col-start-1 col-span-3">{booking?.start_loc}</span>
                     </div>
                     <div className="grid grid-cols-3 min-w-full justify-between items-center">
-                        <FaArrowDown className="col-start-1 text-white"/>
+                        <FaArrowDown className="col-start-2 text-slate-700 "/>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <FaArrowDown className="col-start-2 text-slate-400"/>
+                    </div>
+                    <div className="grid grid-cols-3 min-w-full justify-between items-center">
+                        <FaArrowDown className="col-start-2 text-white "/>
                     </div>
                     <div className="grid grid-cols-3 min-w-full justify-between items-center">
                         <span className="col-start-1 col-span-3">{booking?.end_loc}</span>

@@ -31,15 +31,13 @@ const bookingSchema = new Schema({
     endLocation : {
         type : String
     },
-    arrivalTime :{
+    arrivalDateTime :{
         type : Date,
         required : true
     },
-    pickUpTime : {
+    pickUpDateTime : {
         type : Date,
-    },
-    pickUpdate : {
-        type : Date,
+        required : true,
     },
     flightCode : {
         type : String,
@@ -57,7 +55,8 @@ const bookingSchema = new Schema({
     },
     status : {
         type : String,
-        enum : ["pending", "booked", "waiting", "driving", "complete", "cancelled"]
+        enum : ["pending", "booked", "waiting", "driving", "complete", "cancelled"],
+        default: "pending"
     },
     comments : {
         types : String
