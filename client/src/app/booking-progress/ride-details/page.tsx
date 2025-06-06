@@ -51,7 +51,7 @@ export default function RideDetails(){
 
                 if (response.ok) {
                     // Navigate to the next page after successful submission
-                    router.push("/payment");
+                    router.push("/booking-progress/payment");
                 } else {
                     // Handle error if submission fails
                     console.error("Failed to submit data");
